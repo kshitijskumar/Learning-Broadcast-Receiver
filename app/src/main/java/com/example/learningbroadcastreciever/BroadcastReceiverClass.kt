@@ -6,7 +6,7 @@ import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 
-class BroadcastReceiverClass : BroadcastReceiver() {
+class BroadcastReceiverClass(private val listener: OnReceive) : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         val action = intent?.action ?: return
@@ -14,7 +14,12 @@ class BroadcastReceiverClass : BroadcastReceiver() {
 
         if (action == Intent.ACTION_USER_PRESENT){
             Toast.makeText(context, "Device Unlocked", Toast.LENGTH_SHORT).show()
+            listener.broadcastReceive()
         }
 
+    }
+
+    interface OnReceive{
+        fun broadcastReceive()
     }
 }
